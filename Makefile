@@ -1,4 +1,4 @@
-NS ?= arnaudrebts
+NS ?= docker.pkg.github.com/kid/docker-ib-gateway
 VERSION ?= latest
 
 IMAGE_NAME ?= ib-tws
