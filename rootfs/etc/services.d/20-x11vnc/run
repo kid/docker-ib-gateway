@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv sh
+
+if [ -n "$VNC_PASSWORD" ]; then
+	mkdir -p ~/.vnc/
+	x11vnc -storepasswd "$VNC_PASSWORD" ~/.vnc/passwd
+	exec x11vnc -forever -rfbport 5900 -display "$DISPLAY" -rfbauth ~/.vnc/passwd
+else
+	exec x11vnc -forever -rfbport 5900 -display "$DISPLAY"
+fi
