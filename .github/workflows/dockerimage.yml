@@ -34,7 +34,7 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/v')
 
     - name: Publish release
-      run: docker puslish "docker.pkg.github.com/kid/docker-ib-gateway/ib-gateway:${REF#heads/tags/}"
+      run: docker puslish "docker.pkg.github.com/kid/docker-ib-gateway/ib-gateway:${REF#refs/tags/}"
       env:
         REF: "${{ github.ref }}"
       if: startsWith(github.ref, 'refs/tags/v')
