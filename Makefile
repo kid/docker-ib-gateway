@@ -16,6 +16,7 @@ endif
 .PHONY: build
 
 build: Dockerfile
+	@echo GitHub REF: $(GITHUB_REF)
 	docker build -t $(NS)/$(IMAGE_NAME):$(TAG) -f Dockerfile .
 
 run:
