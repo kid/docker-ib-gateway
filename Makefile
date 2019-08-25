@@ -5,19 +5,23 @@ CONTAINER_INSTANCE ?= default
 
 GITHUB_REF ?= "$(shell git rev-parse --abbrev-ref HEAD)"
 
-ifneq (,$(findstring master,$(GITHUB_REF)))
-	TAG=latest
-else ifneq (,$(findstring refs/tags/v,$(GITHUB_REF)))
-	TAG = $(REF:refs/tags/%=%)
+ifneq (,$(findstring master, $(GITHUB_REF)))
+	MYTAG ?= :latest
+else ifneq (,$(findstring refs/tags/, $(GITHUB_REF)))
+	MYTAG ?= :$(REF:refs/tags/%=%)
 else
-	TAG = $(shell git rev-parse --short HEAD)
+	MYTAG ?= :$(shell git rev-parse --short HEAD)
 endif
 
 .PHONY: build
 
 build: Dockerfile
+	export
 	@echo GitHub REF: $(GITHUB_REF)
-	docker build -t $(NS)/$(IMAGE_NAME):$(TAG) -f Dockerfile .
+	@echo Foo: $(findstring master, $(GITHUB_REF))
+	@echo Bar: $(findstring refs/tags/, $(GITHUB_REF))
+	@echo Baz: $(shell git rev-parse --short HEAD)
+	docker build -t $(NS)/$(IMAGE_NAME)$(MYTAG) -f Dockerfile .
 
 run:
 	docker run --rm -it \
@@ -27,7 +31,12 @@ run:
 		-e IB_USERNAME \
 		-e IB_PASSWORD \
 		-e VNC_PASSWORD \
-		$(NS)/$(IMAGE_NAME):$(TAG)
+		$(NS)/$(IMAGE_NAME)$(MYTAG)
 
 push:
-	docker push $(NS)/$(IMAGE_NAME):$(TAG)
+	docker push $(NS)/$(IMAGE_NAME)$(MYTAG)
+
+test:
+	@echo $(GITHUB_REF)
+	@echo $(MYTAG)
+	@echo $(findstring refs/tags/, $(GITHUB_REF))
