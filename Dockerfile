@@ -1,13 +1,9 @@
-FROM debian:buster
+FROM bitnami/minideb:buster
 
 ARG version=stable
 ARG arch=x64
 
-RUN apt-get -yq update && \
-    apt-get -yq dist-upgrade && \
-    apt-get -yq install ca-certificates curl unzip x11vnc xvfb && \
-    rm -rf /var/lib/apt/lists/*
-
+RUN install_packages ca-certificates curl unzip x11vnc xvfb
 SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
 
 ARG S6_VERSION=v1.22.1.0
