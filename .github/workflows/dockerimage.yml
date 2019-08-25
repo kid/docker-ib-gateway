@@ -9,11 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build
-      run: docker build -t docker.pkg.github.com/kid/docker-ib-gateway/ib-gateway:${{ github.sha }} .
-
-    - name: Tag
-      run: docker tag docker.pkg.github.com/kid/docker-ib-gateway/ib-gateway:${{ github.sha }} docker.pkg.github.com/kid/docker-ib-gateway/ib-gateway:latest
-      if: github.ref == 'refs/heads/master'
+      run: docker build -t ib-gateway .
 
     - name: Login to registry
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REGISTRY_URL
@@ -23,6 +19,22 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       if: github.ref == 'refs/heads/master'
 
-    - name: Publish
-      run: docker push docker.pkg.github.com/kid/docker-ib-gateway/ib-gateway:latest
+    - name: Tag latest
+      run: docker tag ib-gateway "docker.pkg.github.com/kid/docker-ib-gateway/ib-gateway:latest"
       if: github.ref == 'refs/heads/master'
+
+    - name: Publish latest
+      run: docker push "docker.pkg.github.com/kid/docker-ib-gateway/ib-gateway:latest"
+      if: github.ref == 'refs/heads/master'
+
+    - name: Tag release
+      run: docker tag ib-gateway "docker.pkg.github.com/kid/docker-ib-gateway/ib-gateway:${REF#heads/tags/}"
+      env:
+        REF: "${{ github.ref }}"
+      if: startsWith(github.ref, 'refs/tags/v')
+
+    - name: Publish release
+      run: docker puslish "docker.pkg.github.com/kid/docker-ib-gateway/ib-gateway:${REF#heads/tags/}"
+      env:
+        REF: "${{ github.ref }}"
+      if: startsWith(github.ref, 'refs/tags/v')
