@@ -1,6 +1,6 @@
 name: Docker Image CI
 
-on: [push, release]
+on: [push]
 
 jobs:
   build:
@@ -9,11 +9,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build
-      run: docker build -t docker.pkg.github.com/kid/docker-ib-gateway/docker-ib-gateway:${{ github.sha }} .
+      run: docker build -t docker.pkg.github.com/kid/docker-ib-gateway/ib-gateway:${{ github.sha }} .
 
     - name: Tag
-      run: docker tag docker.pkg.github.com/kid/docker-ib-gateway/docker-ib-gateway:${{ github.sha }} docker.pkg.github.com/kid/docker-ib-gateway/docker-ib-gateway:latest
-      if: github.ref == 'master'
+      run: docker tag docker.pkg.github.com/kid/docker-ib-gateway/ib-gateway:${{ github.sha }} docker.pkg.github.com/kid/docker-ib-gateway/ib-gateway:latest
+      if: github.ref == 'refs/heads/master'
 
     - name: Login to registry
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REGISTRY_URL
@@ -21,8 +21,8 @@ jobs:
         DOCKER_REGISTRY_URL: docker.pkg.github.com
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      if: github.ref == 'master'
+      if: github.ref == 'refs/heads/master'
 
     - name: Publish
-      run: docker push docker.pkg.github.com/kid/docker-ib-gateway/docker-ib-gateway:latest
-      if: github.ref == 'master'
+      run: docker push docker.pkg.github.com/kid/docker-ib-gateway/ib-gateway:latest
+      if: github.ref == 'refs/heads/master'
