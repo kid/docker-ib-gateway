@@ -21,9 +21,9 @@ build: Dockerfile
 run:
 	docker run --rm -it \
 		--name $(CONTAINER_NAME)-$(CONTAINER_INSTANCE) \
+		-p 4000:4000 \
+		-p 4001:4001 \
 		-p 5900:5900 \
-		-p 7496:7496 \
-		-p 7497:7497 \
 		-e IB_USERNAME \
 		-e IB_PASSWORD \
 		-e VNC_PASSWORD \

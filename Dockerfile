@@ -29,6 +29,6 @@ RUN curl -L -s https://download2.interactivebrokers.com/installers/ibgateway/${v
 
 COPY rootfs /
 ENV DISPLAY=":0"
+EXPOSE 4000
+EXPOSE 4001
 EXPOSE 5900
-EXPOSE 7496
-EXPOSE 7497
