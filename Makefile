@@ -21,13 +21,12 @@ build: Dockerfile
 run:
 	docker run --rm -it \
 		--name $(CONTAINER_NAME)-$(CONTAINER_INSTANCE) \
-		-p 4000:4000 \
-		-p 4001:4001 \
+		-p 4002:4002 \
 		-p 5900:5900 \
 		-e IB_USERNAME \
 		-e IB_PASSWORD \
 		-e VNC_PASSWORD \
-		$(NS)/$(IMAGE_NAME):$(TAG)
+		$(NS)/$(IMAGE_NAME):$(TAG) \
 
 push:
 	docker push $(NS)/$(IMAGE_NAME):$(TAG)

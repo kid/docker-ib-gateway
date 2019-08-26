@@ -1,8 +1,0 @@
-#!/usr/bin/with-contenv sh
-
-set -ex
-
-sed -i -e "s/IbLoginId=.*$/IbLoginId=${IB_USERNAME}/" ~/IBController/IBController.ini
-sed -i -e "s/IbPassword=.*$/IbPassword=${IB_PASSWORD}/" ~/IBController/IBController.ini
-
-exec /opt/IBController/IBControllerGatewayStart.sh -inline
