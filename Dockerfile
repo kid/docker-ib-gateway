@@ -18,7 +18,7 @@ RUN curl -L -s https://download2.interactivebrokers.com/installers/ibgateway/${v
  && /tmp/gateway.sh -q \
  && rm /tmp/gateway.sh
 
-ARG IBC_VERSION=3.8.1
+ARG IBC_VERSION=3.8.2
 ENV INSTALL4J_ADD_VM_PARAMS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
 RUN curl -L -s "https://github.com/IbcAlpha/IBC/releases/download/${IBC_VERSION}/IBCLinux-${IBC_VERSION}.zip" -o /tmp/ibc.zip \
  && unzip /tmp/ibc.zip -d /opt/ibc \
