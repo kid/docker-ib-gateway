@@ -4,6 +4,8 @@ set -ex
 
 sed -i -e "s/IbLoginId=.*$/IbLoginId=${IB_USERNAME}/" ~/ibc/config.ini
 sed -i -e "s/IbPassword=.*$/IbPassword=${IB_PASSWORD}/" ~/ibc/config.ini
-sed -i -e "s/TWS_MAJOR_VRSN=.*$/TWS_MAJOR_VRSN=978/" /opt/ibc/gatewaystart.sh
+sed -i -e "s/TradingMode=.*$/TradingMode=${TRADING_MODE:-live}/" ~/ibc/config.ini
+sed -i -e "s/ReadOnlyLogin=.*$/ReadOnlyLogin=${READ_ONLY_LOGIN:-no}/" ~/ibc/config.ini
+sed -i -e "s/TWS_MAJOR_VRSN=.*$/TWS_MAJOR_VRSN=${TWS_VERSION:-978}/" /opt/ibc/gatewaystart.sh
 
 exec /opt/ibc/gatewaystart.sh -inline
