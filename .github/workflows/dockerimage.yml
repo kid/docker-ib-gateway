@@ -8,6 +8,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - uses: cdssnc/docker-lint@master
+
     - name: Build
       run: make build
 
